@@ -1,6 +1,6 @@
 node {
-    def WORKSPACE = "/var/lib/jenkins/workspace/springboot-deploy"
-    def dockerImageTag = "springboot-deploy${env.BUILD_NUMBER}"
+    def WORKSPACE = "/var/jenkins_home/workspace/springboot-demo-deploy"
+    def dockerImageTag = "springboot-demo-deploy${env.BUILD_NUMBER}"
 
     try{
 //          notifyBuild('STARTED')
@@ -12,13 +12,13 @@ node {
                 branch: 'master'
          }
           stage('Build docker') {
-                 dockerImage = docker.build("springboot-deploy:${env.BUILD_NUMBER}")
+                 dockerImage = docker.build("springboot-demo-deploy:${env.BUILD_NUMBER}")
           }
 
           stage('Deploy docker'){
                   echo "Docker Image Tag Name: ${dockerImageTag}"
-                  sh "docker stop springboot-deploy || true && docker rm springboot-deploy || true"
-                  sh "docker run --name springboot-deploy -d -p 8081:8081 springboot-deploy:${env.BUILD_NUMBER}"
+                  sh "docker stop springboot-demo-deploy || true && docker rm springboot-demo-deploy || true"
+                  sh "docker run --name springboot-demo-deploy -d -p 8081:8081 springboot-demo-deploy:${env.BUILD_NUMBER}"
           }
     }catch(e){
 //         currentBuild.result = "FAILED"
